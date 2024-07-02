@@ -1,0 +1,62 @@
+library = []
+
+def add_book():
+    title = input("Masukkan judul buku: ")
+    author = input("Masukkan nama penulis: ")
+    year = input("Masukkan tahun terbit: ")
+    book = {"title": title, "author": author, "year": year}
+    library.append(book)
+    print(f"Buku '{title}' berhasil ditambahkan ke perpustakaan!")
+
+def search_books(keyword):
+    return [book for book in library if keyword.lower() in book["title"].lower()]
+
+def remove_book(title):
+    global library
+    library = [book for book in library if book["title"].lower() != title.lower()]
+    print(f"Buku '{title}' berhasil dihapus dari perpustakaan!")
+
+def display_books(books):
+    if not books:
+        print("Tidak ada buku yang ditemukan.")
+    else:
+        for book in books:
+            print(f"Judul: {book['title']}, Penulis: {book['author']}, Tahun: {book['year']}")
+
+def display_all_books():
+    if not library:
+        print("Perpustakaan kosong.")
+    else:
+        print("Daftar buku dalam perpustakaan:")
+        for book in library:
+            print(f"Judul: {book['title']}, Penulis: {book['author']}, Tahun: {book['year']}")
+
+def main():
+    print("============================================")
+    print("NAMA ; MUHAMMAD ALVN PRATAMA")
+    print("Nim ; 20230801155")
+    print("matkul ;praktikum bahasa program ")
+    print("============================================")
+    menu = {
+        "1": ("Tambah Buku", add_book),
+        "2": ("Cari Buku", lambda: display_books(search_books(input("Masukkan kata kunci judul buku yang ingin dicari: ")))),
+        "3": ("Hapus Buku", lambda: remove_book(input("Masukkan judul buku yang ingin dihapus: "))),
+        "4": ("Tampilkan Semua Buku", display_all_books),
+        "5": ("Keluar", exit)
+    }
+    
+    while True:
+        print("\nMenu Rak Buku:")
+        for key, (desc, _) in menu.items():
+            print(f"{key}. {desc}")
+        
+        choice = input("Pilihan menu: ")
+        action = menu.get(choice)
+        
+        if action:
+            action[1]()
+        else:
+            print("Pilihan tidak valid. Silakan coba lagi.")
+
+if __name__ == "__main__":
+    main()
